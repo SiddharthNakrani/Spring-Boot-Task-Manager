@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -34,5 +33,4 @@ public class TaskController {
     public void DeleteTask(@PathVariable(value = "id") Integer id){
         taskRepository.deleteById(id);
     }
-
 }

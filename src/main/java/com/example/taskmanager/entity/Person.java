@@ -3,9 +3,6 @@ package com.example.taskmanager.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Nationalized;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Entity
 public class Person {
     @Id

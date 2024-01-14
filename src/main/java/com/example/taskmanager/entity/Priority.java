@@ -3,11 +3,7 @@ package com.example.taskmanager.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import org.hibernate.annotations.Nationalized;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 public class Priority {

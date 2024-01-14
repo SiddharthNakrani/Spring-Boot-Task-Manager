@@ -23,8 +23,6 @@ public class PersonController {
         if(name == null){
             return personRepository.findAll();
         } else{
-            //List<Person> temp = personRepository.findAll().stream().filter(x -> x.getLastName().contains("Nakrani")).f().stream().toList();
-
             List<Person> temp = personRepository.findAll().stream()
                     .filter(person -> person.getFirstName().toLowerCase().contains(name.toLowerCase())
                                 || person.getLastName().toLowerCase().contains(name.toLowerCase()))
