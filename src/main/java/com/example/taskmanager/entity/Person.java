@@ -1,10 +1,13 @@
 package com.example.taskmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Nationalized;
+import java.util.List;
 
 @Entity
 public class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PersonId", nullable = false)
@@ -36,6 +39,11 @@ public class Person {
     @Nationalized
     @Column(name = "PhoneNumber", length = 25)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "person")
+    @JsonManagedReference
+    private List<Task> tasks;
+
 
     public Integer getId() {
         return id;
@@ -100,5 +108,14 @@ public class Person {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
 
 }

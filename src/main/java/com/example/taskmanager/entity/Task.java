@@ -1,4 +1,5 @@
 package com.example.taskmanager.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Nationalized;
 
@@ -11,6 +12,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "PersonId")
+    @JsonBackReference
     private Person person;
 
     @Nationalized

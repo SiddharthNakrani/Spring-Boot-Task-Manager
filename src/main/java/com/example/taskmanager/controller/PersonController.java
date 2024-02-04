@@ -1,9 +1,11 @@
 package com.example.taskmanager.controller;
 
 import com.example.taskmanager.entity.Person;
+import com.example.taskmanager.model.Credential;
 import com.example.taskmanager.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +32,8 @@ public class PersonController {
 
             return temp;
         }
-
     }
+
 
     @GetMapping(value = "/persons/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -39,12 +41,38 @@ public class PersonController {
     return personRepository.findById(personId);
     }
 
+
+
     @PostMapping(value = "/persons")
     @ResponseStatus(HttpStatus.CREATED)
     public Person AddPerson(@RequestBody Person person){
         personRepository.save(person);
         return person;
     }
+
+    @PostMapping(value = "/login")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> Login(@RequestBody Credential cred){
+
+        Person loginPerson = personRepository.findAll().stream()
+                .filter(person -> {
+                    String username = person.getUsername();
+                    return username != null && username.toLowerCase().equals(cred.username().toLowerCase())
+                            && person.getPassword().equals(cred.password());
+                })
+                .findFirst()
+                .orElse(null);
+
+        if (loginPerson != null) {
+            // Return 200 OK with the person if found
+            return ResponseEntity.ok(loginPerson);
+        } else {
+            // Return 404 Not Found with an error message
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Person not found for the given credentials");
+        }
+    }
+
 
     @DeleteMapping(value = "/persons/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
